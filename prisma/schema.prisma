@@ -19,5 +19,10 @@ model users {
 
 model teachers {
   id          Int         @id @default(autoincrement())
-  name       String      @unique
+  name       String       @unique
+}
+
+model terms {
+  id          Int         @id @default(autoincrement())
+  number      Int         @unique
 }
