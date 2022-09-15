@@ -43,10 +43,10 @@ model disciplines {
 model teachersDisciplines {
   id                    Int                       @id @default(autoincrement())
   teacher               teachers                  @relation(fields: [teacherId], references: [id])
-  discipline            disciplines               @relation(fields: [diciplineId], references: [id])
+  discipline            disciplines               @relation(fields: [disciplineId], references: [id])
   tests                 tests[]
   teacherId             Int
-  diciplineId           Int
+  disciplineId          Int
   createdAt             DateTime                  @default(now())
 }
 
