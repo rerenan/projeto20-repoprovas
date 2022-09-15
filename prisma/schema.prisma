@@ -11,10 +11,10 @@ datasource db {
 }
 
 model users {
-  id          Int         @id @default(autoincrement())
-  email       String      @unique
-  password    String
-  createdAt   DateTime    @default(now())
+  id                    Int                       @id @default(autoincrement())
+  email                 String                    @unique
+  password              String
+  createdAt             DateTime                  @default(now())
 }
 
 model teachers {
@@ -25,10 +25,10 @@ model teachers {
 }
 
 model terms {
-  id            Int             @id @default(autoincrement())
-  number        Int             @unique
-  disciplines   disciplines[]
-  createdAt     DateTime        @default(now())
+  id                    Int                       @id @default(autoincrement())
+  number                Int                       @unique
+  disciplines           disciplines[]
+  createdAt             DateTime                  @default(now())
 }
 
 model disciplines {
@@ -41,16 +41,29 @@ model disciplines {
 }
 
 model teachersDisciplines {
-  id          Int         @id @default(autoincrement())
-  teacher     teachers    @relation(fields: [teacherId], references: [id])
-  discipline  disciplines @relation(fields: [diciplineId], references: [id])
-  teacherId   Int
-  diciplineId Int
-  createdAt   DateTime    @default(now())
+  id                    Int                       @id @default(autoincrement())
+  teacher               teachers                  @relation(fields: [teacherId], references: [id])
+  discipline            disciplines               @relation(fields: [diciplineId], references: [id])
+  tests                 tests[]
+  teacherId             Int
+  diciplineId           Int
+  createdAt             DateTime                  @default(now())
 }
 
 model categories {
   id                    Int                       @id @default(autoincrement())
   name                  String                    @unique
+  tests                 tests[]
+  createdAt             DateTime                  @default(now())
+}
+
+model tests {
+  id                    Int                       @id @default(autoincrement())
+  name                  String
+  pdfUrl                String
+  category              categories                @relation(fields: [categoryId], references: [id])
+  teacherDicipline      teachersDisciplines       @relation(fields: [teacherDisciplineId], references: [id])
+  categoryId            Int
+  teacherDisciplineId   Int
   createdAt             DateTime                  @default(now())
 }
