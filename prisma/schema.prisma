@@ -18,22 +18,33 @@ model users {
 }
 
 model teachers {
-  id          Int         @id @default(autoincrement())
-  name       String       @unique
-  createdAt   DateTime    @default(now())
+  id                    Int                       @id @default(autoincrement())
+  name                  String                    @unique
+  teachersDisciplines   teachersDisciplines[]
+  createdAt             DateTime                  @default(now())
 }
 
 model terms {
-  id          Int         @id @default(autoincrement())
-  number      Int         @unique
-  disciplines disciplines[]
-  createdAt   DateTime    @default(now())
+  id            Int             @id @default(autoincrement())
+  number        Int             @unique
+  disciplines   disciplines[]
+  createdAt     DateTime        @default(now())
 }
 
 model disciplines {
+  id                    Int                       @id @default(autoincrement())
+  name                  String                    @unique
+  term                  terms                     @relation(fields: [termId], references: [id])
+  teachersDisciplines   teachersDisciplines[]
+  termId                Int
+  createdAt             DateTime                  @default(now())
+}
+
+model teachersDisciplines {
   id          Int         @id @default(autoincrement())
-  name        String      @unique
-  term        terms       @relation(fields: [termId], references: [id])
-  termId      Int
+  teacher     teachers    @relation(fields: [teacherId], references: [id])
+  dicipline   disciplines @relation(fields: [diciplineId], references: [id])
+  teacherId   Int
+  diciplineId Int
   createdAt   DateTime    @default(now())
 }
