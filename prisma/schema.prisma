@@ -20,9 +20,20 @@ model users {
 model teachers {
   id          Int         @id @default(autoincrement())
   name       String       @unique
+  createdAt   DateTime    @default(now())
 }
 
 model terms {
   id          Int         @id @default(autoincrement())
   number      Int         @unique
+  disciplines disciplines[]
+  createdAt   DateTime    @default(now())
+}
+
+model disciplines {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  term        terms       @relation(fields: [termId], references: [id])
+  termId      Int
+  createdAt   DateTime    @default(now())
 }
