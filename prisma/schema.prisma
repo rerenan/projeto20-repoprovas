@@ -16,3 +16,8 @@ model users {
   password    String
   createdAt   DateTime    @default(now())
 }
+
+model teachers {
+  id          Int         @id @default(autoincrement())
+  name       String      @unique
+}
