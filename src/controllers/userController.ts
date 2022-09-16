@@ -5,9 +5,9 @@ import * as userService from "../services/userService"
 export async function signUpUser(req:Request, res: Response) {
     const {email, password, confirmPassword} = req.body;
     
-    await userService.createUser({email, password, confirmPassword});
+    const user = await userService.createUser({email, password, confirmPassword});
 
-    res.sendStatus(201);
+    res.status(201).send(user);
 };
 
 export async function signInUser(req:Request, res: Response) {

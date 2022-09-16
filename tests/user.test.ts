@@ -1,11 +1,31 @@
 import dotenv from "dotenv";
+import supertest from "supertest";
+
+import client from "../src/config/db";
+import app from "../src/app";
+import { userSignUpFactory } from "./factories/userFactory";
 
 dotenv.config();
 
 console.log(`db:${process.env.DATABASE_URL}`)
 
+beforeEach(async () => {
+    await client.$executeRaw`TRUNCATE TABLE users`;
+  });
+  
+  afterAll(async () => {
+    await client.$disconnect();
+  });
+
 describe("Test POST /signup", () => {
-    it.todo("Should return status 201, if registered a user in the correct format");
+    it("Should return status 201, if registered a user in the correct format", async () => {
+        const user = userSignUpFactory();
+
+        const result = await supertest(app).post("/signup").send(user);
+
+        expect(result.status).toEqual(201);
+        expect(result.body).not.toBeNull();
+    });
     it.todo("Should return status 409, when trying to register a user that already exists");
     it.todo("Should return status 422, if body format is invalid");
 
