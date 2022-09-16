@@ -35,8 +35,15 @@ describe("Test POST /signup", () => {
 
         expect(result.status).toEqual(409);
     });
-    it.todo("Should return status 422, if body format is invalid");
+    it("Should return status 422, if body format is invalid", async () => {
+        const user = userSignUpFactory();
+        delete user.confirmPassword;
 
+        const result = await supertest(app).post("/signup").send(user);
+
+        expect(result.status).toEqual(422);
+    });
+        
 })
 
 describe("Test POST /signin", () => {
