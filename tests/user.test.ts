@@ -3,7 +3,7 @@ import supertest from "supertest";
 
 import client from "../src/config/db";
 import app from "../src/app";
-import { userSignInFactory, userSignUpFactory } from "./factories/userFactory";
+import { signUpFactory, userSignUpDataFactory } from "./factories/userFactory";
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ beforeEach(async () => {
 
 describe("Test POST /signup", () => {
     it("Should return status 201, if registered a user in the correct format", async () => {
-        const user = userSignUpFactory();
+        const user = userSignUpDataFactory();
 
         const result = await supertest(app).post("/signup").send(user);
 
@@ -27,7 +27,7 @@ describe("Test POST /signup", () => {
         expect(result.body).not.toBeNull();
     });
     it("Should return status 409, when trying to register a user that already exists", async () => {
-        const user = userSignUpFactory();
+        const user = userSignUpDataFactory();
         
         await supertest(app).post("/signup").send(user);
 
@@ -36,7 +36,9 @@ describe("Test POST /signup", () => {
         expect(result.status).toEqual(409);
     });
     it("Should return status 422, if body format is invalid", async () => {
-        const user = userSignUpFactory();
+
+        const user = userSignUpDataFactory();
+        
         delete user.confirmPassword;
 
         const result = await supertest(app).post("/signup").send(user);
@@ -47,7 +49,13 @@ describe("Test POST /signup", () => {
 })
 
 describe("Test POST /signin", () => {
-    it.todo("Should return status 201, if logged a user in the correct format and return token");
+    it("Should return status 201, if logged a user in the correct format and return token",async () => {
+        const regiteredUser = await signUpFactory();
+        const result = await supertest(app).post("/signin").send(regiteredUser);
+
+        expect(result.status).toBe(200);
+        expect(result.body.token).not.toBeNull();
+    });
     it.todo("Should return status 401, if the credentials are wrong");
     it.todo("Should return status 404, when trying to login a user that does not exist");
     it.todo("Should return status 422, if body format is invalid");

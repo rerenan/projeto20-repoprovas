@@ -1,6 +1,8 @@
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
+import client from "../../src/config/db";
+import bcrypt from "bcrypt";
 
-export function userSignUpFactory(){
+export function userSignUpDataFactory(){
     
     const password = faker.internet.password();
     return {
@@ -10,9 +12,16 @@ export function userSignUpFactory(){
     };
 };
 
-export function userSignInFactory(){
-    return {
-        email:faker.internet.email(),
-        password: faker.internet.password()
-    };
+export async function signUpFactory(){
+    const user = userSignUpDataFactory();
+    
+    const result = await client.users.create({
+        data: {
+            email: user.email,
+            password: bcrypt.hashSync(user.password,10)
+        }
+    });
+    
+    delete user.confirmPassword;
+    return user;
 };
