@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-import * as authRepository from "../repositories/authRepository"
+import * as userRepository from "../repositories/userRepository"
 import { UserInsertData, UserSignUpData } from "../types/User";
 import generateUserToken from '../utils/generateToken';
 
@@ -9,12 +9,12 @@ export async function createUser(userData:UserSignUpData) {
 
     if(password !== confirmPassword) throw {type: "unprocessableEntity", message: "password and confirmPassword they're not the same"}
 
-    const user = await authRepository.findUserByEmail(email);
+    const user = await userRepository.findUserByEmail(email);
     if(user) throw {type: "conflict", message: "This email already used."};
 
     const passwordHash = bcrypt.hashSync(password, 10);
 
-    await authRepository.insert({email, password: passwordHash});
+    await userRepository.insert({email, password: passwordHash});
     
     return;
 
@@ -23,7 +23,7 @@ export async function createUser(userData:UserSignUpData) {
 export async function login(userData:UserInsertData) {
     const {email, password} = userData;
     
-    const user = await authRepository.findUserByEmail(email);
+    const user = await userRepository.findUserByEmail(email);
     if(!user) throw {type: "unauthorized", message: "Email or password incorrect"};
 
     const validatePassword = bcrypt.compareSync(password, user.password);
