@@ -3,7 +3,7 @@ import supertest from "supertest";
 
 import client from "../src/config/db";
 import app from "../src/app";
-import { userSignUpFactory } from "./factories/userFactory";
+import { userSignInFactory, userSignUpFactory } from "./factories/userFactory";
 
 dotenv.config();
 
@@ -26,7 +26,15 @@ describe("Test POST /signup", () => {
         expect(result.status).toEqual(201);
         expect(result.body).not.toBeNull();
     });
-    it.todo("Should return status 409, when trying to register a user that already exists");
+    it("Should return status 409, when trying to register a user that already exists", async () => {
+        const user = userSignUpFactory();
+        
+        await supertest(app).post("/signup").send(user);
+
+        const result = await supertest(app).post("/signup").send(user);
+
+        expect(result.status).toEqual(409);
+    });
     it.todo("Should return status 422, if body format is invalid");
 
 })
