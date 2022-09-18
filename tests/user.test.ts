@@ -63,6 +63,13 @@ describe("Test POST /signin", () => {
 
         expect(result.status).toBe(401);
     });
-    it.todo("Should return status 404, when trying to login a user that does not exist");
-    it.todo("Should return status 422, if body format is invalid");
+    it("Should return status 422, if body format is invalid",async () => {
+        const registeredUser = await signUpFactory();
+
+        delete registeredUser.email;
+
+        const result = await supertest(app).post("/signin").send(registeredUser);
+
+        expect(result.status).toBe(422);
+    });
 })
