@@ -46,7 +46,7 @@ describe("Test POST /signup", () => {
         expect(result.status).toEqual(422);
     });
         
-})
+});
 
 describe("Test POST /signin", () => {
     it("Should return status 201, if logged a user in the correct format and return token",async () => {
@@ -72,4 +72,4 @@ describe("Test POST /signin", () => {
 
         expect(result.status).toBe(422);
     });
-})
+});

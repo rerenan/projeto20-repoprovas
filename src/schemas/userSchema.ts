@@ -1,4 +1,4 @@
-import { UserInsertData, UserSignUpData } from '../types/User';
+import { UserInsertData, UserSignUpData } from "../types/user";
 import joi from "joi";
 
 export const signUpSchema = joi.object<UserSignUpData>({
