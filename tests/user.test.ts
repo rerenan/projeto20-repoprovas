@@ -3,7 +3,7 @@ import supertest from "supertest";
 
 import client from "../src/config/db";
 import app from "../src/app";
-import { signUpFactory, userSignUpDataFactory } from "./factories/userFactory";
+import { signUpFactory, userSignInDataFactory, userSignUpDataFactory } from "./factories/userFactory";
 
 dotenv.config();
 
@@ -50,13 +50,19 @@ describe("Test POST /signup", () => {
 
 describe("Test POST /signin", () => {
     it("Should return status 201, if logged a user in the correct format and return token",async () => {
-        const regiteredUser = await signUpFactory();
-        const result = await supertest(app).post("/signin").send(regiteredUser);
+        const registeredUser = await signUpFactory();
+        const result = await supertest(app).post("/signin").send(registeredUser);
 
         expect(result.status).toBe(200);
         expect(result.body.token).not.toBeNull();
     });
-    it.todo("Should return status 401, if the credentials are wrong");
+    it("Should return status 401, if the credentials are wrong", async () => {
+        const notRegisteredUser = userSignInDataFactory();
+
+        const result = await supertest(app).post("/signin").send(notRegisteredUser);
+
+        expect(result.status).toBe(401);
+    });
     it.todo("Should return status 404, when trying to login a user that does not exist");
     it.todo("Should return status 422, if body format is invalid");
 })

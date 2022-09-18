@@ -12,6 +12,16 @@ export function userSignUpDataFactory(){
     };
 };
 
+export function userSignInDataFactory(){
+    
+    const password = faker.internet.password();
+    return {
+        email:faker.internet.email(),
+        password,
+    };
+};
+
+
 export async function signUpFactory(){
     const user = userSignUpDataFactory();
     
