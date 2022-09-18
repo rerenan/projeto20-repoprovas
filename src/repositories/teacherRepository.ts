@@ -9,3 +9,11 @@ export async function findById(id: number) {
     });
     return result;
 }
+export async function findByName(name: string) {
+    const result = await client.teachers.findUnique({
+        where: {
+            name
+        }
+    });
+    return result;
+}
