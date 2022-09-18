@@ -12,10 +12,20 @@ export async function insert(userData: UserInsertData) {
     });
 };
 
-export async function findUserByEmail(email:string) {
+export async function findByEmail(email: string) {
     const result = await client.users.findUnique({
         where: {
             email
+        }
+    });
+    return result;
+}
+
+
+export async function findById(id: number) {
+    const result = await client.users.findUnique({
+        where: {
+            id
         }
     });
     return result;
