@@ -4,7 +4,7 @@ import * as userRepository from "../repositories/userRepository"
 import { UserInsertData, UserSignUpData } from "../types/user";
 import generateUserToken from '../utils/generateToken';
 
-export async function createUser(userData:UserSignUpData) {
+export async function postUser(userData:UserSignUpData) {
     const {email, password, confirmPassword} = userData;
 
     if(password !== confirmPassword) throw {type: "unprocessableEntity", message: "password and confirmPassword they're not the same"}
