@@ -9,3 +9,12 @@ export async function findById(id: number) {
     });
     return result;
 }
+
+export async function findByTeacherId(teacherId: number) {
+    const result = await client.teachersDisciplines.findMany({
+        where: {
+            teacherId
+        }
+    });
+    return result;
+}
