@@ -3,7 +3,7 @@ import supertest from "supertest";
 
 import client from "../src/config/db";
 import app from "../src/app";
-import { signInFactory, testDataFactory } from "./factories/userFactory";
+import { fakeTokenFactory, signInFactory, testDataFactory } from "./factories/userFactory";
 
 dotenv.config();
 
@@ -21,7 +21,6 @@ describe("Test POST /test/create", () => {
     it("Shold return status 201, if registered and return test", async () => {
         
         const test = await testDataFactory();
-        console.log(test)
         const token = await signInFactory();
 
         const result = await supertest(app).post("/test/create").send(test).set("Authorization", `Bearer ${token}`);
@@ -29,7 +28,15 @@ describe("Test POST /test/create", () => {
         expect(result.status).toEqual(201);
         expect(result.body).not.toBeNull();
     });
-    it.todo("Should return status 401, if authentication token is invalid");
+    it("Should return status 401, if authentication token is invalid", async () => {
+
+        const test = await testDataFactory();
+        const fakeToken = await fakeTokenFactory();
+
+        const result = await supertest(app).post("/test/create").send(test).set("Authorization", `Bearer ${fakeToken}`);
+
+        expect(result.status).toEqual(401);
+    });
     it.todo("Should return status 404, if fields relations is incompatible");
     it.todo("Should return status 422, if send test in format invalid");
 })

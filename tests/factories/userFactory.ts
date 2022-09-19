@@ -77,3 +77,7 @@ export async function signInFactory(){
     return token;
     
 };
+
+export function fakeTokenFactory(){
+    return faker.datatype.uuid()
+}
