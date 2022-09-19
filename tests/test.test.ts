@@ -75,6 +75,13 @@ describe("Test GET /test/bydiscipline", () => {
     });
 })
 describe("Test GET /test/byteacher", () => {
-    
+    it("Should return status 200 and return tests", async () =>{
+        const token = await signInFactory();
+
+        const result = await supertest(app).get("/test/byteacher").send().set("Authorization", `Bearer ${token}`);
+
+        expect(result.status).toEqual(200);
+        expect(result.body).not.toBeNull();
+    });
     it.todo("Should return status 401, if authentication token is invalid");
 })
