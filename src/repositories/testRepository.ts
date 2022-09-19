@@ -29,6 +29,9 @@ export async function getDisciplinesByTerms() {
                     name: true
                 }
             }
+        },
+        orderBy: {
+            number: "asc"
         }
     })
     return result;
@@ -66,6 +69,9 @@ export async function getTestByDiciplines(discipline: string) {
                     }
                 }
             }
+        },
+        orderBy: {
+            name: "asc"
         }
     })
     return result;
@@ -113,6 +119,9 @@ export async function getTestByTeachers(teacher: string) {
                     }
                 }
             }
+        },
+        orderBy: {
+            name: "asc"
         }
     });
     return result;
