@@ -83,5 +83,11 @@ describe("Test GET /test/byteacher", () => {
         expect(result.status).toEqual(200);
         expect(result.body).not.toBeNull();
     });
-    it.todo("Should return status 401, if authentication token is invalid");
+    it("Should return status 401, if authentication token is invalid", async () => {
+        const fakeToken = await fakeTokenFactory();
+
+        const result = await supertest(app).get("/test/byteacher").send().set("Authorization", `Bearer ${fakeToken}`);
+
+        expect(result.status).toEqual(401);
+    });
 })
