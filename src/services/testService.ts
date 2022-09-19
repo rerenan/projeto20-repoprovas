@@ -41,9 +41,22 @@ export async function postTest(testData:TestReceivedData) {
 };
 
 export async function getAllByDisciplines() { 
-    const tests = await testRepository.getAllByDisciplines();
+    const disciplinesByTerms = await testRepository.getDisciplinesByTerms();
 
-    return tests;
+    const testsByDisciplines = await Promise.all( disciplinesByTerms.map(async(term)=> {
+             const disciplines = await Promise.all(term.disciplines.map(async(discipline)=> {
+                const categories = await testRepository.getTestByDiciplines(discipline.name);
+                return {
+                    name: discipline.name,
+                    categories
+                }
+            }));
+            return{
+                term: term.number,
+                disciplines
+            }
+        }));
+    return testsByDisciplines;
 }
 
 export async function getAllByTeachers() { 

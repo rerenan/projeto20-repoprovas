@@ -19,36 +19,43 @@ export async function findById(id: number) {
     return result;
 }
 
-export async function getAllByDisciplines() {
+export async function getDisciplinesByTerms() {
     const result = await client.terms.findMany({
-        orderBy: {
-            number: "asc"
-        },
         select: {
             number: true,
             disciplines: {
                 select: {
+                    name: true
+                }
+            }
+        }
+    })
+    return result;
+}
+export async function getTestByDiciplines(discipline: string) {
+    const result = await client.categories.findMany({
+        where:{
+            tests: {
+                some: {
+                    teacherDicipline: {
+                        discipline: {
+                            name: discipline
+                        }
+                    }
+                }
+            }
+        },
+        select: {
+            name: true,
+            tests: {
+                select:{
                     name: true,
-                    teachersDisciplines: {
+                    pdfUrl: true,
+                    teacherDicipline: {
                         select: {
-                            tests: {
-                                select: {
-                                    name: true,
-                                    pdfUrl: true,
-                                    category: {
-                                        select: {
-                                            name: true
-                                        }
-                                    },
-                                    teacherDicipline: {
-                                        select: {
-                                            teacher: {
-                                                select: {
-                                                    name: true
-                                                }
-                                            }
-                                        }
-                                    }
+                            teacher: {
+                                select :{
+                                    name: true
                                 }
                             }
                         }
