@@ -19,7 +19,7 @@ export async function findById(id: number) {
     return result;
 }
 
-export async function getAllByTerms() {
+export async function getAllByDisciplines() {
     const result = await client.terms.findMany({
         
         orderBy:{

@@ -40,8 +40,8 @@ export async function postTest(testData:TestReceivedData) {
 
 };
 
-export async function getByDisciplines() { 
-    const tests = await testRepository.getAllByTerms();
+export async function getAllByDisciplines() { 
+    const tests = await testRepository.getAllByDisciplines();
 
     return tests;
 }
