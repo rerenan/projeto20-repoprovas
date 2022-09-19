@@ -25,6 +25,7 @@ export async function getDisciplinesByTerms() {
             number: true,
             disciplines: {
                 select: {
+                    id: true,
                     name: true
                 }
             }
@@ -46,15 +47,18 @@ export async function getTestByDiciplines(discipline: string) {
             }
         },
         select: {
+            id: true,
             name: true,
             tests: {
                 select:{
+                    id: true,
                     name: true,
                     pdfUrl: true,
                     teacherDicipline: {
                         select: {
                             teacher: {
                                 select :{
+                                    id: true,
                                     name: true
                                 }
                             }
@@ -90,15 +94,18 @@ export async function getTestByTeachers(teacher: string) {
             }
         },
         select: {
+            id: true,
             name: true,
             tests: {
                 select:{
+                    id: true,
                     name: true,
                     pdfUrl: true,
                     teacherDicipline: {
                         select: {
                             discipline: {
                                 select: {
+                                    id: true,
                                     name: true
                                 }
                             }
