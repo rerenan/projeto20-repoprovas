@@ -5,7 +5,7 @@ import * as userRepository from "../repositories/userRepository"
 
 dotenv.config();
 
-export default async function tokenValidator(req: Request, res: Response, next: NextFunction) {
+export default async function tokenMiddleware(req: Request, res: Response, next: NextFunction) {
     const { authorization } = req.headers;
     if(!authorization) throw {type: "Unauthorized", message: "Token invalid"};
     const token = authorization?.replace("Bearer ", "").trim();

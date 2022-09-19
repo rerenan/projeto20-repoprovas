@@ -18,3 +18,8 @@ export async function findById(id: number) {
     });
     return result;
 }
+
+export async function getAllByTerms() {
+    const result = await client.tests.findMany();
+    return result;
+}

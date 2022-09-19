@@ -39,3 +39,9 @@ export async function postTest(testData:TestReceivedData) {
     return testCreated;
 
 };
+
+export async function getByDisciplines() { 
+    const tests = await testRepository.getAllByTerms();
+
+    return tests;
+}
