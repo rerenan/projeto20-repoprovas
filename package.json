@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test": "npx dotenv -e .env.test npx prisma migrate dev && npx dotenv -e .env.test npx prisma db seed && npx dotenv -e .env.test jest --no-cache",
-    "start": "ts-node ./dist/server.js",
+    "start": "ts-node ./dist/src/server.js",
     "dev": "npx nodemon ./src/server.ts"
   },
   "prisma": {
