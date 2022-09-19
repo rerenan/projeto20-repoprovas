@@ -46,7 +46,16 @@ describe("Test POST /test/create", () => {
 
         expect(result.status).toEqual(404);
     });
-    it.todo("Should return status 422, if send test in format invalid");
+    it("Should return status 422, if send test in format invalid", async () => {
+        const test = await testDataFactory();
+        delete test.pdfUrl;
+
+        const token = await signInFactory();
+
+        const result = await supertest(app).post("/test/create").send(test).set("Authorization", `Bearer ${token}`);
+
+        expect(result.status).toEqual(422);
+    });
 })
 describe("Test GET /test/bydisciplines", () => {
   
