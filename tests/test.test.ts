@@ -57,11 +57,17 @@ describe("Test POST /test/create", () => {
         expect(result.status).toEqual(422);
     });
 })
-describe("Test GET /test/bydisciplines", () => {
+describe("Test GET /test/bydiscipline", () => {
   
-    it.todo("Should return status 401, if authentication token is invalid");
+    it("Should return status 401, if authentication token is invalid", async () =>{
+        const fakeToken = await fakeTokenFactory();
+
+        const result = await supertest(app).get("/test/bydiscipline").send().set("Authorization", `Bearer ${fakeToken}`);
+
+        expect(result.status).toEqual(401);
+    });
 })
-describe("Test GET /test/byteachers", () => {
+describe("Test GET /test/byteacher", () => {
     
     it.todo("Should return status 401, if authentication token is invalid");
 })
