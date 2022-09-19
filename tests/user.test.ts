@@ -49,7 +49,7 @@ describe("Test POST /signup", () => {
 });
 
 describe("Test POST /signin", () => {
-    it("Should return status 201, if logged a user in the correct format and return token",async () => {
+    it("Should return status 200, if logged a user in the correct format and return token",async () => {
         const registeredUser = await signUpFactory();
         const result = await supertest(app).post("/signin").send(registeredUser);
 
