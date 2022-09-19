@@ -1,4 +1,4 @@
-import { signUpSchema, signInSchema } from '../schemas/userSchema';
+import { signUpSchema, signInSchema } from '../utils/schemas/userSchema';
 import { Router } from "express";
 import { signInUser, signUpUser } from "../controllers/userController";
 import schemaMiddleware from "../middlewares/schemaMiddleware";

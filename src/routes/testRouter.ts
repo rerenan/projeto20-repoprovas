@@ -2,7 +2,7 @@ import { Router } from "express";
 import { createTest, getByDisciplines, getByTeachers } from "../controllers/testController";
 import schemaMiddleware from "../middlewares/schemaMiddleware";
 import tokenMiddleware from "../middlewares/tokenMiddleware";
-import { testSchema } from "../schemas/testSchema";
+import { testSchema } from "../utils/schemas/testSchema";
 
 const testRouter = Router();
 
