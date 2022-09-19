@@ -3,7 +3,7 @@ import supertest from "supertest";
 
 import client from "../src/config/db";
 import app from "../src/app";
-import { fakeTokenFactory, signInFactory, testDataFactory } from "./factories/userFactory";
+import { fakeTestData, fakeTokenFactory, signInFactory, testDataFactory } from "./factories/userFactory";
 
 dotenv.config();
 
@@ -37,7 +37,15 @@ describe("Test POST /test/create", () => {
 
         expect(result.status).toEqual(401);
     });
-    it.todo("Should return status 404, if fields relations is incompatible");
+    it("Should return status 404, if fields relations are incompatible", async () => {
+       
+        const fakeTest = await fakeTestData();
+        const token = await signInFactory();
+
+        const result = await supertest(app).post("/test/create").send(fakeTest).set("Authorization", `Bearer ${token}`);
+
+        expect(result.status).toEqual(404);
+    });
     it.todo("Should return status 422, if send test in format invalid");
 })
 describe("Test GET /test/bydisciplines", () => {
