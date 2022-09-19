@@ -67,7 +67,46 @@ export async function getTestByDiciplines(discipline: string) {
     return result;
 }
 
-export async function getAllByTeachers() {
-    const result = await client.tests.findMany();
+export async function getAllTeachers() {
+    const result = await client.teachers.findMany({
+        select: {
+            name: true
+        }
+    });
+    return result;
+}
+
+export async function getTestByTeachers(teacher: string) {
+    const result = await client.categories.findMany({
+        where:{
+            tests: {
+                some: {
+                    teacherDicipline: {
+                        teacher: {
+                            name: teacher
+                        }
+                    }
+                }
+            }
+        },
+        select: {
+            name: true,
+            tests: {
+                select:{
+                    name: true,
+                    pdfUrl: true,
+                    teacherDicipline: {
+                        select: {
+                            discipline: {
+                                select: {
+                                    name: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
     return result;
 }

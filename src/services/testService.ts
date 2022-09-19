@@ -60,7 +60,13 @@ export async function getAllByDisciplines() {
 }
 
 export async function getAllByTeachers() { 
-    const tests = await testRepository.getAllByTeachers();
-
-    return tests;
+    const teachers = await testRepository.getAllTeachers();
+    const testsByTeachers = await Promise.all(teachers.map(async(teacher)=>{
+        const categories = await testRepository.getTestByTeachers(teacher.name);
+        return {
+            teacher: teacher.name,
+            categories: categories
+        }
+    }))
+    return testsByTeachers;
 }
