@@ -48,6 +48,8 @@ model teachersDisciplines {
   teacherId             Int
   disciplineId          Int
   createdAt             DateTime                  @default(now())
+
+  @@unique([teacherId, disciplineId], name: "teacher_discipline")
 }
 
 model categories {

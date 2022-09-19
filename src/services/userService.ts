@@ -10,6 +10,7 @@ export async function postUser(userData:UserSignUpData) {
     if(password !== confirmPassword) throw {type: "unprocessableEntity", message: "password and confirmPassword they're not the same"}
 
     const user = await userRepository.findByEmail(email);
+    console.log(user)
     if(user) throw {type: "conflict", message: "This email already used."};
 
     const passwordHash = bcrypt.hashSync(password, 10);

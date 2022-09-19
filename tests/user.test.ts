@@ -13,13 +13,9 @@ beforeEach(async () => {
     await client.$executeRaw`TRUNCATE TABLE users`;
   });
   
-  afterAll(async () => {
-    await client.$disconnect();
-  });
-
 describe("Test POST /signup", () => {
     it("Should return status 201, if registered a user in the correct format", async () => {
-        const user = userSignUpDataFactory();
+        const user = await userSignUpDataFactory();
 
         const result = await supertest(app).post("/signup").send(user);
 
@@ -27,9 +23,9 @@ describe("Test POST /signup", () => {
         expect(result.body).not.toBeNull();
     });
     it("Should return status 409, when trying to register a user that already exists", async () => {
-        const user = userSignUpDataFactory();
-        
-        await supertest(app).post("/signup").send(user);
+        const user = await userSignUpDataFactory();
+
+        const userRegistered = await supertest(app).post("/signup").send(user);
 
         const result = await supertest(app).post("/signup").send(user);
 
@@ -37,9 +33,10 @@ describe("Test POST /signup", () => {
     });
     it("Should return status 422, if body format is invalid", async () => {
 
-        const user = userSignUpDataFactory();
+        const user = await userSignUpDataFactory();
         
         delete user.confirmPassword;
+
 
         const result = await supertest(app).post("/signup").send(user);
 
@@ -73,3 +70,7 @@ describe("Test POST /signin", () => {
         expect(result.status).toBe(422);
     });
 });
+
+afterAll(async () => {
+    await client.$disconnect();
+  });

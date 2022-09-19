@@ -6,7 +6,7 @@ import generateUserToken from "../../src/utils/generateToken";
 
 dotenv.config();
 
-export function userSignUpDataFactory() {
+export async function userSignUpDataFactory() {
 
     const password = faker.internet.password();
     return {
@@ -27,7 +27,7 @@ export function userSignInDataFactory() {
 
 
 export async function signUpFactory() {
-    const user = userSignUpDataFactory();
+    const user = await userSignUpDataFactory();
 
     const result = await client.users.create({
         data: {
@@ -42,7 +42,7 @@ export async function signUpFactory() {
 
 
 export async function signInFactory() {
-    const user = userSignUpDataFactory();
+    const user = await userSignUpDataFactory();
 
     const result = await client.users.create({
         data: {
