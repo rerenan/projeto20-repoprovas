@@ -1,4 +1,4 @@
-import { TestReceivedData } from "../types/test";
+import { TestReceivedData } from "../types/Test";
 import * as testRepository from "../repositories/testRepository"
 import * as categoryRepository from "../repositories/categoryRepository"
 import * as disciplineRepository from "../repositories/disciplineRepository"

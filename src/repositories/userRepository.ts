@@ -1,5 +1,5 @@
 import client from "../config/db";
-import { UserInsertData } from "../types/user";
+import { UserInsertData } from "../types/User";
 
 export async function insert(userData: UserInsertData) {
     const {email, password } = userData;

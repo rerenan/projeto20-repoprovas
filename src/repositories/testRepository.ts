@@ -1,5 +1,5 @@
 import client from "../config/db";
-import { TestInsertData } from "../types/test";
+import { TestInsertData } from "../types/Test";
 
 export async function insert(testData: TestInsertData) {
 
