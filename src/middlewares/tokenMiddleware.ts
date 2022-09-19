@@ -7,7 +7,7 @@ dotenv.config();
 
 export default async function tokenMiddleware(req: Request, res: Response, next: NextFunction) {
     const { authorization } = req.headers;
-    if(!authorization) throw {type: "Unauthorized", message: "Token invalid"};
+    if(!authorization) throw {type: "unauthorized", message: "Token invalid"};
     const token = authorization?.replace("Bearer ", "").trim();
     try{
         const JWT_SECRET = process.env.JWT_SECRET
