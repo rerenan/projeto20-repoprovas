@@ -20,6 +20,43 @@ export async function findById(id: number) {
 }
 
 export async function getAllByTerms() {
-    const result = await client.tests.findMany();
-    return result;
-}
+    const result = await client.terms.findMany({
+        
+        orderBy:{
+            number: "asc"
+        },
+        select: {
+            number: true,
+            disciplines: {
+                select :{
+                    name: true,
+                    teachersDisciplines:{
+                        select:{
+                                tests:{
+                                    select: {
+                                        name: true,
+                                        pdfUrl: true,
+                                        category: {
+                                            select: {
+                                                name: true
+                                            }
+                                        },
+                                        teacherDicipline: {
+                                            select: {
+                                                teacher: {
+                                                    select: {
+                                                        name: true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        return result;
+    } 
