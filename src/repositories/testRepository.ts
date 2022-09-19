@@ -21,32 +21,30 @@ export async function findById(id: number) {
 
 export async function getAllByDisciplines() {
     const result = await client.terms.findMany({
-        
-        orderBy:{
+        orderBy: {
             number: "asc"
         },
         select: {
             number: true,
             disciplines: {
-                select :{
+                select: {
                     name: true,
-                    teachersDisciplines:{
-                        select:{
-                                tests:{
-                                    select: {
-                                        name: true,
-                                        pdfUrl: true,
-                                        category: {
-                                            select: {
-                                                name: true
-                                            }
-                                        },
-                                        teacherDicipline: {
-                                            select: {
-                                                teacher: {
-                                                    select: {
-                                                        name: true
-                                                    }
+                    teachersDisciplines: {
+                        select: {
+                            tests: {
+                                select: {
+                                    name: true,
+                                    pdfUrl: true,
+                                    category: {
+                                        select: {
+                                            name: true
+                                        }
+                                    },
+                                    teacherDicipline: {
+                                        select: {
+                                            teacher: {
+                                                select: {
+                                                    name: true
                                                 }
                                             }
                                         }
@@ -57,6 +55,12 @@ export async function getAllByDisciplines() {
                     }
                 }
             }
-        })
-        return result;
-    } 
+        }
+    })
+    return result;
+}
+
+export async function getAllByTeachers() {
+    const result = await client.tests.findMany();
+    return result;
+}
