@@ -3,7 +3,8 @@ import supertest from "supertest";
 
 import client from "../src/config/db";
 import app from "../src/app";
-import { fakeTestData, fakeTokenFactory, signInFactory, testDataFactory } from "./factories/userFactory";
+import { fakeTokenFactory, signInFactory } from "./factories/userFactory";
+import { fakeTestData, testDataFactory } from "./factories/testFactory";
 
 dotenv.config();
 
